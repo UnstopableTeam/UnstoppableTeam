@@ -73,3 +73,4 @@ class GraphPanel extends JPanel {
         }
     }
 }
+//ja vse pomenyal
