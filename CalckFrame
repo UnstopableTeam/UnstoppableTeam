@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package calcframe;
+package calcframe;//пакет
 
 /**
  *
  * @author UAUTOMAT04
  */
+//если хочешь разобраться - читай все комментарии(не дублировал в аналогичных случаях), ставь лайк, подписывайся
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class CalcFrame extends JFrame {
-    JTextArea display= new JTextArea();
-    JPanel buttonPanel = new JPanel(new GridLayout(5,3));
-    JButton button0 = new JButton("0");
+public class CalcFrame extends JFrame {//основной и единственный класс
+    JTextArea display= new JTextArea();//поле ввода/вывода  
+    JPanel buttonPanel = new JPanel(new GridLayout(5,3));//панель с кнопками
+    JButton button0 = new JButton("0");//кнопки
     JButton button1 = new JButton("1");
     JButton button2 = new JButton("2");
     JButton button3 = new JButton("3");
@@ -34,117 +35,150 @@ public class CalcFrame extends JFrame {
     JButton buttonSub = new JButton("-");
     JButton buttonMul = new JButton("*");
     JButton buttonStart = new JButton("=");
-    double secondValue;
-    double firstValue = 0;
-    String operation = "+";
+    JButton buttonSqrt = new JButton("√");
+    
+    double secondValue = 0;//переменная второго числа
+    double firstValue = 0;//переменная первого числа
+    String operation = "+";//здесь храниться оператор
+    boolean isDot = false;//флаг наличия точки
     CalcFrame() {
-        setBounds(300, 300, 300, 300);
-        setTitle ("ЗАО Трамвай и пассажиры");
-        display.setEditable(false);
-        display.setText("0");
+        setBounds(300, 300, 300, 300);//размер окна 
+        setTitle ("ЗАО Трамвай и пассажиры");// это про вас
+        this.setResizable(false); //запрет расайзаблить окно
+        display.setEditable(false);//запрет редактировать поле ввода/вывода
+        display.setText("0");//начальное значение
         
-        button0.addActionListener(new ActionListener() {
+        button0.addActionListener(new ActionListener() {//навешиваем листнер на кнопку
             @Override
-            public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "0");
+            public void actionPerformed(ActionEvent e) {//обрабатываем листнер функцией
+                  display.setText(display.getText()+"0");//берем имеющийся текст в поле и пририсовываем ему ноль
+                
             }
         });
-        button1.addActionListener(new ActionListener() {
-            @Override
+        button1.addActionListener(new ActionListener() {//то же самое с кнопкой 1
+            @Override//апдейт
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"1");
+                if(Double.valueOf(display.getText()) == 0 && !isDot  )//заменяет начальный ноль если нет точки на 1
+                {display.setText("1");}
+                else display.setText(display.getText()+"1");//если что-то уже есть в поле ввода пририсовываем 1
+                
             }
         });
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"2");
+                if(Double.valueOf(display.getText()) == 0 && !isDot )
+                {display.setText("2");}
+                else display.setText(display.getText()+"2");
             }
         });
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"3");
+                if(Double.valueOf(display.getText()) == 0 && !isDot)
+                {display.setText("3");}
+                else display.setText(display.getText()+"3");
             }
         });
         button4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"4");
+                if(Double.valueOf(display.getText()) == 0 && !isDot)
+                {display.setText("4");}
+                else display.setText(display.getText()+"4");
             }
         });
         button5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"5");
+                if(Double.valueOf(display.getText()) == 0 && !isDot)
+                {display.setText("5");}
+                else display.setText(display.getText()+"5");
             }
         });
         button6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"6");
+                if(Double.valueOf(display.getText()) == 0 && !isDot)
+                {display.setText("6");}
+                else display.setText(display.getText()+"6");
             }
         });
         button7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"7");
+                if(Double.valueOf(display.getText()) == 0 && !isDot )
+                {display.setText("7");}
+                else display.setText(display.getText()+"7");
             }
         });
         button8.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"8");
+                if(Double.valueOf(display.getText()) == 0 && !isDot)
+                {display.setText("8");}
+                else display.setText(display.getText()+"8");
             }
         });
         button9.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText()+"9");
+                if(Double.valueOf(display.getText()) == 0 && !isDot)
+                {display.setText("9");}
+                else display.setText(display.getText()+"9");
             }
         });
         buttonDot.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                String ID = display.getText();
-                boolean isContains = ID.toLowerCase().contains(".".toLowerCase());
+            public void actionPerformed(ActionEvent e) {//обработка точки
+                String ID = display.getText();//берет строку из поля
+                boolean isContains = ID.toLowerCase().contains(".".toLowerCase());// проверяет наличие точки
                 if(!isContains){
-                display.setText(display.getText()+".");}
+                display.setText(display.getText()+"."); isDot = true;}//ставит точку, обновляет флаг
             }
         });
-        buttonBack.addActionListener(new ActionListener() {
+        buttonBack.addActionListener(new ActionListener() {//стерка
             @Override
             public void actionPerformed(ActionEvent e) {
-                String temp = display.getText();
-                if(temp.length() > 0){
-                display.setText(temp.substring(0,temp.length()-1));}
-                display.setText("0");
-                buttonStart.setVisible(true);
+                //String temp = display.getText();// возможность удаления последнего символа. отключена за ненадобностью
+               // if(temp.length() > 0){
+               // display.setText(temp.substring(0,temp.length()-1));}
+                display.setText("0");//так она стирает
+                buttonStart.setVisible(true);//показываем кнопки действий
                 buttonSum.setVisible(true);
                 buttonSub.setVisible(true);
                 buttonMul.setVisible(true);
                 buttonDivide.setVisible(true);
-                
+                isDot = false;//изменяем флаг точки
             }
         });
-        buttonSum.addActionListener(new ActionListener() {
+        buttonSum.addActionListener(new ActionListener() {//сложение
             @Override
             public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText());
+                firstValue = Double.valueOf(display.getText());//имеющееся в поле чилсо становится первым слагаемым
                 
-                display.setText("0");
-                operation = "+";
-                buttonSum.setVisible(false);
+                display.setText("0");//подготовка к вводу второго слагаемого
+                operation = "+";// запоминаем операцию
+                buttonSum.setVisible(false);//убираем остальные действия до завершения текущей операции
                 buttonSub.setVisible(false);
                 buttonMul.setVisible(false);
                 buttonDivide.setVisible(false);
-                buttonStart.setVisible(true);
+                buttonStart.setVisible(true);//подсказываем пользователю, что ему нужно будет нажать "равно"
+                isDot = false;
+            }
+        });
+        buttonSqrt.addActionListener(new ActionListener() {//корень
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                firstValue = Double.valueOf(display.getText());
+                display.setText(Math.sqrt(firstValue)+"");//вычисление корня
+                firstValue = Double.valueOf(display.getText());
             }
         });
         buttonMul.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText());
+                firstValue = Double.valueOf(display.getText());
                 display.setText("0");
                 operation = "*";
                 buttonSum.setVisible(false);
@@ -152,12 +186,13 @@ public class CalcFrame extends JFrame {
                 buttonMul.setVisible(false);
                 buttonDivide.setVisible(false);
                 buttonStart.setVisible(true);
+                isDot = false;
             }
         });
         buttonDivide.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText());
+                firstValue = Double.valueOf(display.getText());
                 display.setText("0");
                 operation = "/";
                 buttonSum.setVisible(false);
@@ -165,12 +200,13 @@ public class CalcFrame extends JFrame {
                 buttonMul.setVisible(false);
                 buttonDivide.setVisible(false);
                 buttonStart.setVisible(true);
+                isDot = false;
             }
         });
         buttonSub.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText());
+                firstValue = Double.valueOf(display.getText());
                 display.setText("0");
                 operation = "-";
                 buttonSum.setVisible(false);
@@ -178,19 +214,20 @@ public class CalcFrame extends JFrame {
                 buttonMul.setVisible(false);
                 buttonDivide.setVisible(false);
                 buttonStart.setVisible(true);
+                isDot = false;
             }
         });
         
-        buttonStart.addActionListener(new ActionListener() {
+        buttonStart.addActionListener(new ActionListener() {// КЛАВИША "РАВНО" слушается
             @Override
-            public void actionPerformed(ActionEvent e) {
-                secondValue = Integer.valueOf(display.getText());
-                buttonSum.setVisible(true);
+            public void actionPerformed(ActionEvent e) {//функция после нажатия "равно"
+                secondValue = Double.valueOf(display.getText());//берем с дисплея второе значение
+                buttonSum.setVisible(true);//пользователю доступны действия
                 buttonSub.setVisible(true);
                 buttonMul.setVisible(true);
                 buttonDivide.setVisible(true);
-                if("+".equals(operation)){
-                    display.setText((firstValue+secondValue)+"");
+                if("+".equals(operation)){//делает то, что запомнено как операция на текущий момент
+                    display.setText((firstValue+secondValue)+"");//сумма первого и второго значений
                 }
                 if("-".equals(operation)){
                     display.setText((firstValue-secondValue)+"");
@@ -199,26 +236,24 @@ public class CalcFrame extends JFrame {
                     display.setText((firstValue*secondValue)+"");
                 }
                 if("/".equals(operation)){
-                    if(secondValue == 0){display.setText("дебил!(деление на 0)");} else
+                    if(secondValue == 0){display.setText("дебил!(деление на 0)");} else//обработка исключения "/0"
                     display.setText((firstValue/secondValue)+"");
                 }
-                firstValue = 0;
+                firstValue = 0;//возврат статуса кво
                 secondValue = 0;
                 operation = "+";
                 buttonStart.setVisible(false);
-                buttonSum.setVisible(false);
-                buttonSub.setVisible(false);
-                buttonMul.setVisible(false);
-                buttonDivide.setVisible(false);
+                
+                isDot = false;
                 
                 
             }
         });
-        setLayout(new BorderLayout());
-        add(display, BorderLayout.NORTH);
-        add(buttonPanel,BorderLayout.CENTER);
-        add(buttonStart,BorderLayout.SOUTH);
-        buttonPanel.add(button0);
+        setLayout(new BorderLayout());// правило расположения частей jswing приложнрия. почитайте об этом
+        add(display, BorderLayout.NORTH);// прикрепляем дисплей наверх
+        add(buttonPanel,BorderLayout.CENTER);//кнопки в центре
+        add(buttonStart,BorderLayout.SOUTH);//равно внизу
+        buttonPanel.add(button0);//добавляем кнопки
         buttonPanel.add(button1);
         buttonPanel.add(button2);
         buttonPanel.add(button3);
@@ -234,11 +269,12 @@ public class CalcFrame extends JFrame {
         buttonPanel.add(buttonBack);
         buttonPanel.add(buttonDivide);
         buttonPanel.add(buttonDot);
-        //buttonDot.setVisible(false);
-        setVisible(true);
+        buttonPanel.add(buttonSqrt);
+        
+        setVisible(true);//делаем все видимым
     }
 
     public static void main(String[] args) {
-        new CalcFrame();
+        new CalcFrame();//взываем к классу из майна. как говорил Амяк Акапян:"Если не дунуть - чуда не произойдет" поэтому мы дуем
     }
 }
